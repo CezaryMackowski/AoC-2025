@@ -1,0 +1,25 @@
+version: '3'
+
+env:
+  OS: '{{ .GOOS | default "darwin" }}'
+  ARCH: '{{ .GOARCH | default "arm64" }}'
+  BIN_NAME: "aoc-2025"
+  BIN_DIR: '{{ .ROOT_DIR }}/bin/'
+  BIN_DIR_SYSTEM_SPECIFIC: '{{ .ROOT_DIR }}/bin/{{ .OS }}-{{ .ARCH }}'
+  DOCKER_IMAGE_TAG: "aoc-2025"
+
+tasks:
+  default:
+    desc: Show help for each task
+    cmd: task -l
+    silent: true
+
+  test:local:
+    desc: Run tests locally
+    cmd: go test ./...
+
+  test:docker:
+    desc: Run tests in docker environment
+    cmds:
+      - docker build -t '{{ .DOCKER_IMAGE_TAG }}' .
+      - docker run --rm '{{ .DOCKER_IMAGE_TAG }}'

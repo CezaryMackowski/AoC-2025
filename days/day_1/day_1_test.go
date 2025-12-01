@@ -48,3 +48,25 @@ func TestDay1(t *testing.T) {
 		})
 	}
 }
+
+func TestDay1Extra(t *testing.T) {
+	inputRotations := getInput("../inputs/day_1.txt")
+
+	var tests = []struct {
+		rotations      []rotation
+		expectedResult int
+	}{
+		{[]rotation{{left, 68}, {left, 30}, {right, 48}, {left, 5}, {right, 60}, {left, 55}, {left, 1}, {left, 99}, {right, 14}, {left, 82}}, 6},
+		{inputRotations, 6623},
+	}
+
+	for _, tt := range tests {
+		t.Run("Day 1 (Extra)", func(t *testing.T) {
+			result := day1Extra(tt.rotations)
+
+			if result != tt.expectedResult {
+				t.Errorf("Wrong - got %d, expected %d", result, tt.expectedResult)
+			}
+		})
+	}
+}
